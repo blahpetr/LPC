@@ -24,13 +24,13 @@ final class PaperChatListener implements Listener {
 	public void onChat(final AsyncChatEvent event) {
 		final Player player = event.getPlayer();
 		final String format = plugin.buildFormat(player);
-		final Component message = LEGACY.deserialize(plugin.processMessage(player, LEGACY.serialize(event.message())));
+		final String processedMessage = plugin.processMessage(player, LEGACY.serialize(event.message()));
+		final Component messageComponent = LEGACY.deserialize(processedMessage);
 
-		event.message(message);
 		event.renderer(new ChatRenderer() {
 			@Override
 			public Component render(final Player source, final Component sourceDisplayName, final Component message, final Audience viewer) {
-				return formatMessage(format, message);
+				return formatMessage(format, messageComponent);
 			}
 		});
 	}
