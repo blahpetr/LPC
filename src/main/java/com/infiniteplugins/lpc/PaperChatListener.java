@@ -26,7 +26,6 @@ final class PaperChatListener implements Listener {
         final String processedMessage = plugin.processMessage(player, LegacyComponentSerializer.legacyAmpersand().serialize(event.message()));
         final Component messageComponent = LegacyComponentSerializer.legacyAmpersand().deserialize(processedMessage);
 
-        // Compose full Adventure component from format, use Adventure's replaceText
         Component formatComponent = LegacyComponentSerializer.legacyAmpersand().deserialize(format)
                 .replaceText(TextReplacementConfig.builder()
                         .matchLiteral("{message}")
@@ -34,7 +33,7 @@ final class PaperChatListener implements Listener {
                         .build()
                 );
 
-        // Use renderer, ignore legacy serializers
+        // DO NOT call event.message(...). Only set the renderer.
         event.renderer(new ChatRenderer() {
             @Override
             public Component render(final Player source, final Component sourceDisplayName, final Component message, final Audience viewer) {
